@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -9,6 +10,7 @@ import UpdateAvatarPopup from "./UpdateAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import Api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -99,6 +101,8 @@ function App() {
 
   return (
     <div className="App">
+      <BrowserRouter> 
+      <Route path="/">
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main
@@ -128,6 +132,13 @@ function App() {
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </CurrentUserContext.Provider>
+      </Route>
+      <Route path={'/sign-up'}>
+      </Route>
+      
+      <Route path={'/sign-in'}>
+      </Route>
+      </BrowserRouter> 
     </div>
   );
 }
