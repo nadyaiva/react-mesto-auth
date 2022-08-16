@@ -4,7 +4,7 @@
   margin: 60px auto 0;
 }
 
-.form_login {
+.login__form {
   width: 100%;
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-.input_place_login {
+.login__input {
   width: 100%;
 }
 
@@ -51,7 +51,7 @@
   padding-bottom: 30px;
 }
 
-.input_place_login {
+.login__input {
   box-sizing: border-box;
   font-family: "Inter";
   font-style: normal;
