@@ -11,6 +11,7 @@ import ImagePopup from "./ImagePopup";
 import Api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Login from "./Login";
+import ProtectedRout from "./ProtectedRoute";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -100,13 +101,15 @@ function App() {
   }
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="App">
+    <Header />
       <BrowserRouter>
-        {" "}
         <Switch>
-          <Route exact path="/">
-            <CurrentUserContext.Provider value={currentUser}>
-              <Header />
+          <ProtectedRout exact path="/" loggedIn={true} children={ 
+            <>
+            
+              
               <Main
                 onEditProfileClick={onEditProfile}
                 onAddPlaceClick={onAddPlace}
@@ -133,8 +136,11 @@ function App() {
                 onUpdateAvatar={handleUpdateAvatar}
               />
               <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-            </CurrentUserContext.Provider>
-          </Route>
+            
+            </>
+          }
+          />
+            
           <Route path={"/sign-up"}></Route>
 
           <Route path={"/login"}>
@@ -143,6 +149,7 @@ function App() {
         </Switch>
       </BrowserRouter>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 
