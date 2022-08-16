@@ -3,41 +3,41 @@ import React from "react";
 function Login() {
 
     return(
-        <div className='login login__container'>
+        <div className='auth-content auth-content__container'>
       <form
-        className={`login__form`}
+        className={`auth-content__form`}
         name={`login`}
         // onSubmit={pass}
       >
-        <h2 className="login__heading">Вход</h2>
+        <h2 className="auth-content__heading">Вход</h2>
 
-        <fieldset className="login__input-container">
-        <label className="login__label login__label_email">
+        <fieldset className="auth-content__input-container">
+        <label className="auth-content__label">
         <input
-          className="login__input login__input_email"
+          className="auth-content__input"
           placeholder="Email"
           defaultValue=""
           type="email"
           name="email"
-          id="login-email"
+          id="auth-content-email"
           required
         //   ref={avatarRef}
         />
       </label>
-      <label className="login__label login__label_password">
+      <label className="auth-content__label">
         <input
-          className="login__input login__input_password"
+          className="auth-content__input"
           placeholder="Пароль"
           defaultValue=""
           type="password"
           name="password"
-          id="password"
+          id="auth-content-password"
           required
         //   ref={avatarRef}
         />
       </label>
           <button
-            className="login__save-button"
+            className="auth-content__save-button"
             type="submit"
           >
             Войти

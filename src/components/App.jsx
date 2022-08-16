@@ -104,7 +104,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
     <div className="App">
     <Header />
-      <BrowserRouter>
         <Switch>
           <ProtectedRout exact path="/" loggedIn={true} children={ 
             <>
@@ -147,7 +146,6 @@ function App() {
             <Login />
           </Route>
         </Switch>
-      </BrowserRouter>
     </div>
     </CurrentUserContext.Provider>
   );
