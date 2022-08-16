@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -10,7 +10,7 @@ import UpdateAvatarPopup from "./UpdateAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import Api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-
+import Login from "./Login";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -101,44 +101,47 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter> 
-      <Route path="/">
-      <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main
-          onEditProfileClick={onEditProfile}
-          onAddPlaceClick={onAddPlace}
-          onEditAvatarClick={onEditAvatar}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
-        <Footer />
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-        <AddPostPopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlaceSubmit}
-        />
-        <UpdateAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      </CurrentUserContext.Provider>
-      </Route>
-      <Route path={'/sign-up'}>
-      </Route>
-      
-      <Route path={'/sign-in'}>
-      </Route>
-      </BrowserRouter> 
+      <BrowserRouter>
+        {" "}
+        <Switch>
+          <Route exact path="/">
+            <CurrentUserContext.Provider value={currentUser}>
+              <Header />
+              <Main
+                onEditProfileClick={onEditProfile}
+                onAddPlaceClick={onAddPlace}
+                onEditAvatarClick={onEditAvatar}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+                cards={cards}
+              />
+              <Footer />
+              <EditProfilePopup
+                isOpen={isEditProfilePopupOpen}
+                onClose={closeAllPopups}
+                onUpdateUser={handleUpdateUser}
+              />
+              <AddPostPopup
+                isOpen={isAddPlacePopupOpen}
+                onClose={closeAllPopups}
+                onAddPlace={handleAddPlaceSubmit}
+              />
+              <UpdateAvatarPopup
+                isOpen={isEditAvatarPopupOpen}
+                onClose={closeAllPopups}
+                onUpdateAvatar={handleUpdateAvatar}
+              />
+              <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+            </CurrentUserContext.Provider>
+          </Route>
+          <Route path={"/sign-up"}></Route>
+
+          <Route path={"/login"}>
+            <Login />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
