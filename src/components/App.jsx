@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -12,6 +12,7 @@ import Api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Login from "./Login";
 import ProtectedRout from "./ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -135,7 +136,7 @@ function App() {
                 onUpdateAvatar={handleUpdateAvatar}
               />
               <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-            
+            <InfoTooltip/>
             </>
           }
           />
