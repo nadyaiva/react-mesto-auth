@@ -64,3 +64,13 @@
   border-bottom: 1px solid #cccccc;
   height: 27px;
 }
+
+.auth-content__signup-link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 400;
+font-size: 14px;
+line-height: 17px;
+text-align: center;
+padding-top: 15px;
+}

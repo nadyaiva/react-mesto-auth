@@ -13,6 +13,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Login from "./Login";
 import ProtectedRout from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
+import Register from "./Register";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -141,7 +142,9 @@ function App() {
           }
           />
             
-          <Route path={"/sign-up"}></Route>
+          <Route path={"/sign-up"}>
+            <Register/>
+          </Route>
 
           <Route path={"/login"}>
             <Login />
