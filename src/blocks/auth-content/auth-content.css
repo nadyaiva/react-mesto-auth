@@ -69,8 +69,30 @@
   text-decoration: none;
   color: #fff;
   font-weight: 400;
-font-size: 14px;
-line-height: 17px;
-text-align: center;
-padding-top: 15px;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  padding-top: 15px;
+}
+
+@media screen and (max-width: 900px) {
+  .auth-content__heading {
+    font-size: 20px;
+    line-height: 24px;
+    padding-bottom: 40px;
+  }
+  .auth-content__container {
+    width: 260px;
+  }
+  .auth-content__input {
+    height: 27px;
+
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .auth-content__save-button {
+    margin-top: 173px;
+    font-size: 16px;
+    line-height: 19px;
+  }
 }

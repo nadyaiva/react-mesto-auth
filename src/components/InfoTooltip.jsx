@@ -4,7 +4,7 @@ import info_fail from '../images/info_fail.svg';
 
 function InfoTooltip() {
   return (
-    <div className="popup popup_opened popup_place_infotip-reg">
+    <div className="popup popup_place_infotip-reg">
         <div className="infotip-reg">
       <img className="infotip-reg__icon infotip-reg__icon_success" src={info_success} alt="Успешно" />
       <p className="infotip-reg__text">Вы успешно зарегистрировались!</p>

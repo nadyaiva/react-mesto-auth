@@ -1,13 +1,25 @@
 .header {
   display: flex;
-  align-items: flex-start;
+  justify-content: space-between;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   max-width: 880px;
   margin: 0 auto;
+  align-items: center;
+  max-width: 880px;
+}
+.header__link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+line-height: 22px;
 }
 
 @media screen and (max-width: 900px) {
   .header {
-    max-width: 100%;
+    max-width: calc(100vw - 60px);
+  }
+  .header__link {
+font-size: 14px;
+line-height: 17px;
   }
 }
