@@ -1,12 +1,29 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+  }
+
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setEmail("");
+    setPassword("");
+  }
   return (
     <div className="auth-content auth-content__container">
       <form
         className={`auth-content__form`}
         name={`login`}
-        // onSubmit={pass}
+        onSubmit={handleSubmit}
       >
         <h2 className="auth-content__heading">Вход</h2>
 
@@ -18,8 +35,10 @@ function Login() {
               defaultValue=""
               type="email"
               name="email"
+              value={email || ""}
               id="auth-content-email"
               required
+              onChange={handleChangeEmail}
               //   ref={avatarRef}
             />
           </label>
@@ -28,10 +47,12 @@ function Login() {
               className="auth-content__input"
               placeholder="Пароль"
               defaultValue=""
+              value={password || ""}
               type="password"
               name="password"
               id="auth-content-password"
               required
+              onChange={handleChangePassword}
               //   ref={avatarRef}
             />
           </label>

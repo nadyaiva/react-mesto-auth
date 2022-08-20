@@ -1,6 +1,23 @@
 import React from "react";
+import { useState} from "react";
 
 function Register() {
+    const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+  }
+
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setEmail("");
+    setPassword("");
+  }
   return (
     <div className="auth-content auth-content__container">
       <form
@@ -20,6 +37,7 @@ function Register() {
               name="email"
               id="auth-content-email"
               required
+              onChange={handleChangeEmail}
               //   ref={avatarRef}
             />
           </label>
@@ -32,6 +50,7 @@ function Register() {
               name="password"
               id="auth-content-password"
               required
+              onChange={handleChangePassword}
               //   ref={avatarRef}
             />
           </label>

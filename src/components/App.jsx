@@ -22,6 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   React.useEffect(() => {
     Promise.all([Api.getUserInfoApi(), Api.getInitialCards()]).then(
@@ -107,7 +108,7 @@ function App() {
     <div className="App">
     <Header />
         <Switch>
-          <ProtectedRout exact path="/" loggedIn={true} children={ 
+          <ProtectedRout exact path="/" loggedIn={loggedIn} children={ 
             <>
             
               
