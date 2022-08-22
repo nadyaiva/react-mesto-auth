@@ -1,20 +1,14 @@
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
+import { register } from "../utils/Auth";
 
-function Register() {
-    const [email, setEmail] = useState("");
+function Register({onRegistration}) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handleChangePassword(e) {
-    setPassword(e.target.value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
+    onRegistration({email, password})
     setEmail("");
     setPassword("");
   }
@@ -23,7 +17,7 @@ function Register() {
       <form
         className={`auth-content__form`}
         name={`login`}
-        // onSubmit={pass}
+        onSubmit={handleSubmit}
       >
         <h2 className="auth-content__heading"> Регистрация</h2>
 
@@ -37,7 +31,9 @@ function Register() {
               name="email"
               id="auth-content-email"
               required
-              onChange={handleChangeEmail}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               //   ref={avatarRef}
             />
           </label>
@@ -50,14 +46,18 @@ function Register() {
               name="password"
               id="auth-content-password"
               required
-              onChange={handleChangePassword}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               //   ref={avatarRef}
             />
           </label>
           <button className="auth-content__save-button" type="submit">
             Зарегистрироваться
           </button>
-          <a className="auth-content__signup-link" href="#">Уже зарегистрированы? Войти</a>
+          <a className="auth-content__signup-link" href="#">
+            Уже зарегистрированы? Войти
+          </a>
         </fieldset>
       </form>
     </div>

@@ -1,20 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function Login() {
+function Login({ onAuthorization }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handleChangePassword(e) {
-    setPassword(e.target.value);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
+    onAuthorization({ password, email });
     setEmail("");
     setPassword("");
   }
@@ -32,13 +25,14 @@ function Login() {
             <input
               className="auth-content__input"
               placeholder="Email"
-              defaultValue=""
               type="email"
               name="email"
               value={email || ""}
               id="auth-content-email"
               required
-              onChange={handleChangeEmail}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               //   ref={avatarRef}
             />
           </label>
@@ -46,13 +40,14 @@ function Login() {
             <input
               className="auth-content__input"
               placeholder="Пароль"
-              defaultValue=""
               value={password || ""}
               type="password"
               name="password"
               id="auth-content-password"
               required
-              onChange={handleChangePassword}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               //   ref={avatarRef}
             />
           </label>

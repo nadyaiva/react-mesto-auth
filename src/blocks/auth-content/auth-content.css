@@ -37,6 +37,7 @@
   height: 50px;
   border-radius: 2px;
   border-style: none;
+  cursor: pointer;
 }
 
 .auth-content__heading {

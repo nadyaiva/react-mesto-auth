@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -14,6 +14,7 @@ import Login from "./Login";
 import ProtectedRout from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 import Register from "./Register";
+import * as auth from "../utils/Auth";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -22,16 +23,24 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = React.useState([]);
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSuccessTip, setIsSuccessTip] = useState(false);
+  const history = useHistory();
 
-  React.useEffect(() => {
+  function getContent() {
     Promise.all([Api.getUserInfoApi(), Api.getInitialCards()]).then(
       ([userInfo, cards]) => {
         setCurrentUser(userInfo);
         setCards(cards);
       }
     );
-  }, []);
+  }
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      getContent();
+    }
+  }, [isLoggedIn]);
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -49,11 +58,16 @@ function App() {
     setIsEditAvatarPopupOpen(true);
   }
 
+  function onSuccessTip() {
+    setIsSuccessTip(true);
+  }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
+    setIsSuccessTip(false);
   }
 
   function handleCardLike(card) {
@@ -103,55 +117,85 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleAuthorization({ password, email }) {
+    auth.login({ password, email }).then((data) => {
+      if (data.token) {
+        setIsLoggedIn(true);
+        localStorage.setItem("token", data.token);
+        history.push("/");
+      }
+    });
+  }
+
+  function onCloseSuccess() {
+    history.push("/login");
+  }
+
+  function handleRegistration({ password, email }) {
+    auth.register({ password, email }).then((data) => {
+      if (data.data._id) {
+        setIsSuccessTip(true);
+        localStorage.setItem("token", data.token);
+      }
+    });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="App">
-    <Header />
+      <div className="App">
+        <Header />
         <Switch>
-          <ProtectedRout exact path="/" loggedIn={loggedIn} children={ 
-            <>
-            
-              
-              <Main
-                onEditProfileClick={onEditProfile}
-                onAddPlaceClick={onAddPlace}
-                onEditAvatarClick={onEditAvatar}
-                onCardClick={handleCardClick}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
-                cards={cards}
-              />
-              <Footer />
-              <EditProfilePopup
-                isOpen={isEditProfilePopupOpen}
-                onClose={closeAllPopups}
-                onUpdateUser={handleUpdateUser}
-              />
-              <AddPostPopup
-                isOpen={isAddPlacePopupOpen}
-                onClose={closeAllPopups}
-                onAddPlace={handleAddPlaceSubmit}
-              />
-              <UpdateAvatarPopup
-                isOpen={isEditAvatarPopupOpen}
-                onClose={closeAllPopups}
-                onUpdateAvatar={handleUpdateAvatar}
-              />
-              <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-            <InfoTooltip/>
-            </>
-          }
+          <ProtectedRout
+            exact
+            path="/"
+            isLoggedIn={isLoggedIn}
+            children={
+              <>
+                <Main
+                  onEditProfileClick={onEditProfile}
+                  onAddPlaceClick={onAddPlace}
+                  onEditAvatarClick={onEditAvatar}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                  cards={cards}
+                />
+                <Footer />
+                <EditProfilePopup
+                  isOpen={isEditProfilePopupOpen}
+                  onClose={closeAllPopups}
+                  onUpdateUser={handleUpdateUser}
+                />
+                <AddPostPopup
+                  isOpen={isAddPlacePopupOpen}
+                  onClose={closeAllPopups}
+                  onAddPlace={handleAddPlaceSubmit}
+                />
+                <UpdateAvatarPopup
+                  isOpen={isEditAvatarPopupOpen}
+                  onClose={closeAllPopups}
+                  onUpdateAvatar={handleUpdateAvatar}
+                />
+                <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+                <InfoTooltip />
+              </>
+            }
           />
-            
+
           <Route path={"/sign-up"}>
-            <Register/>
+            <Register onRegistration={handleRegistration} />
+            <InfoTooltip
+              isOpen={isSuccessTip}
+              onClose={closeAllPopups}
+              onCloseSuccessClick={onCloseSuccess}
+            />
           </Route>
 
           <Route path={"/login"}>
-            <Login />
+            <Login onAuthorization={handleAuthorization} />
           </Route>
         </Switch>
-    </div>
+      </div>
     </CurrentUserContext.Provider>
   );
 }
