@@ -25,9 +25,10 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSuccessTip, setIsSuccessTip] = useState(false);
+  const [email, setEmail] = useState('')
   const history = useHistory();
 
-  function getContent() {
+  function getUserInfo() {
     Promise.all([Api.getUserInfoApi(), Api.getInitialCards()]).then(
       ([userInfo, cards]) => {
         setCurrentUser(userInfo);
@@ -38,7 +39,7 @@ function App() {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      getContent();
+      getUserInfo();
     }
   }, [isLoggedIn]);
 
@@ -140,10 +141,33 @@ function App() {
     });
   }
 
+  function tokenCheck() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      auth.getContent(token).then((res) => {
+        if (res) {
+          setEmail(res.data.email)
+          setIsLoggedIn(true);
+          history.push("/");
+        }
+      })
+    }
+  }
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, [isLoggedIn])
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      history.push('/');
+    }
+  }, [isLoggedIn])
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
-        <Header />
+        <Header isLoggedIn={isLoggedIn} email={email}/>
         <Switch>
           <ProtectedRout
             exact

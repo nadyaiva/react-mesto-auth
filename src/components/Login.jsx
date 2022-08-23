@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 function Login({ onAuthorization }) {
   const [email, setEmail] = useState("");
@@ -7,6 +7,9 @@ function Login({ onAuthorization }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!password || !email) {
+      return;
+    }
     onAuthorization({ password, email });
     setEmail("");
     setPassword("");
