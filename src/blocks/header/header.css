@@ -14,13 +14,17 @@
   line-height: 22px;
 }
 
-.header__login-info {
+.header__list-info {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
 }
 
-.header__userEmail {
+.header__username {
   visibility: hidden;
   font-style: normal;
   font-weight: 500;
@@ -29,9 +33,28 @@
   color: #fff;
   margin: 0;
 }
-.header__userEmail_visible {
+.header__username_visible {
   visibility: visible;
   margin-right: 24px;
+}
+
+.header__button_notfocus {
+  color: #A9A9A9;
+}
+
+.header__email {
+  margin: 0;
+}
+
+.header__button {
+  background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+  outline: none;
+  color: #fff;
+  padding: 0;
 }
 
 @media screen and (max-width: 900px) {
