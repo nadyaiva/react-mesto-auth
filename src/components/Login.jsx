@@ -36,7 +36,6 @@ function Login({ onAuthorization }) {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              //   ref={avatarRef}
             />
           </label>
           <label className="auth-content__label">

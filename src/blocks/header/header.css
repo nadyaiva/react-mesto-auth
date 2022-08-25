@@ -24,25 +24,16 @@
 
 }
 
-.header__username {
-  visibility: hidden;
+.header__link_notfocus {
+  color: #A9A9A9;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
-  color: #fff;
-  margin: 0;
-}
-.header__username_visible {
-  visibility: visible;
-  margin-right: 24px;
-}
-
-.header__link_notfocus {
-  color: #A9A9A9;
 }
 
 .header__email {
+  padding-right: 24px;
   margin: 0;
 }
 
@@ -53,5 +44,8 @@
   .header__link {
     font-size: 14px;
     line-height: 17px;
+  }
+  .header__list-info {
+    flex-direction: column;
   }
 }

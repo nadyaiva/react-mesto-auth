@@ -25,7 +25,9 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSuccessTip, setIsSuccessTip] = useState(false);
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
+  const [isInfoTipOpen, setIsInfoTipOpen] = useState(false);
+
   const history = useHistory();
 
   function getUserInfo() {
@@ -60,7 +62,7 @@ function App() {
   }
 
   function onSuccessTip() {
-    setIsSuccessTip(true);
+    setIsInfoTipOpen(true);
   }
 
   function closeAllPopups() {
@@ -68,7 +70,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
-    setIsSuccessTip(false);
+    setIsInfoTipOpen(false);
   }
 
   function handleCardLike(card) {
@@ -125,7 +127,10 @@ function App() {
         localStorage.setItem("token", data.token);
         history.push("/");
       }
-    });
+    }).catch((err) => {
+      setIsInfoTipOpen(true);
+      setIsSuccessTip(false);
+    })
   }
 
   function onCloseSuccess() {
@@ -136,9 +141,12 @@ function App() {
     auth.register({ password, email }).then((data) => {
       if (data.data._id) {
         setIsSuccessTip(true);
-        localStorage.setItem("token", data.token);
+        setIsInfoTipOpen(true);
       }
-    });
+    }).catch((err) => {
+      setIsInfoTipOpen(true);
+      setIsSuccessTip(false);
+    })
   }
 
   function tokenCheck() {
@@ -167,7 +175,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
-        <Header isLoggedIn={isLoggedIn} email={email}/>
+        <Header email={email}/>
         <Switch>
           <ProtectedRout
             exact
@@ -201,7 +209,6 @@ function App() {
                   onUpdateAvatar={handleUpdateAvatar}
                 />
                 <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-                <InfoTooltip />
               </>
             }
           />
@@ -209,14 +216,19 @@ function App() {
           <Route path={"/sign-up"}>
             <Register onRegistration={handleRegistration} />
             <InfoTooltip
-              isOpen={isSuccessTip}
+              isOpen={isInfoTipOpen}
               onClose={closeAllPopups}
-              onCloseSuccessClick={onCloseSuccess}
+              isSuccessTip={isSuccessTip}
             />
           </Route>
 
           <Route path={"/login"}>
             <Login onAuthorization={handleAuthorization} />
+            <InfoTooltip
+              isOpen={isInfoTipOpen}
+              onClose={closeAllPopups}
+              isSuccessTip={isSuccessTip}
+            />
           </Route>
         </Switch>
       </div>

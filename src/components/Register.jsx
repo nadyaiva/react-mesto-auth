@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { register } from "../utils/Auth";
+import { Link } from "react-router-dom";
 
 function Register({onRegistration}) {
   const [email, setEmail] = useState("");
@@ -34,7 +34,6 @@ function Register({onRegistration}) {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              //   ref={avatarRef}
             />
           </label>
           <label className="auth-content__label">
@@ -49,15 +48,14 @@ function Register({onRegistration}) {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              //   ref={avatarRef}
             />
           </label>
           <button className="auth-content__save-button" type="submit">
             Зарегистрироваться
           </button>
-          <a className="auth-content__signup-link" href="#">
+          <Link className="auth-content__signup-link" to={'/login'}>
             Уже зарегистрированы? Войти
-          </a>
+          </Link>
         </fieldset>
       </form>
     </div>
