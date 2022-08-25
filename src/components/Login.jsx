@@ -15,7 +15,7 @@ function Login({ onAuthorization }) {
     setPassword("");
   }
   return (
-    <div className="auth-content auth-content__container">
+    <div className="auth-content">
       <form
         className={`auth-content__form`}
         name={`login`}
