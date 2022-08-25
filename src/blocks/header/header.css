@@ -4,7 +4,7 @@
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   max-width: 880px;
   margin: 0 auto;
-
+  align-items: center;
   max-width: 880px;
 }
 .header__link {
@@ -38,23 +38,12 @@
   margin-right: 24px;
 }
 
-.header__button_notfocus {
+.header__link_notfocus {
   color: #A9A9A9;
 }
 
 .header__email {
   margin: 0;
-}
-
-.header__button {
-  background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-  outline: none;
-  color: #fff;
-  padding: 0;
 }
 
 @media screen and (max-width: 900px) {

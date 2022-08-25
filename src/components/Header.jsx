@@ -1,6 +1,7 @@
 import React from "react";
 import logoMesto from "../images/logo.svg";
-import { Link, useHistory } from "react-router-dom";
+import Sign from "./Sign";
+import {Switch, Link, Route, useHistory } from "react-router-dom";
 
 function Header({ isLoggedIn, email }) {
   const emailClassName = `header__username ${
@@ -10,9 +11,10 @@ function Header({ isLoggedIn, email }) {
   const loginClassName = `header__button ${
     isLoggedIn ? "header__button_notfocus" : ""
   }`;
+
   const history = useHistory();
 
-  function signOut() {
+  function loggedOut() {
     localStorage.removeItem("token");
     history.push("/login");
   }
@@ -20,14 +22,21 @@ function Header({ isLoggedIn, email }) {
   return (
     <header className="header">
       <img className="header__logo" src={logoMesto} alt="Логотип Mesto" />
-      <ul className="header__list-info">
-        <li className={emailClassName}>
-          <p className="header__email">{email}</p>
-        </li>
-        <li>
-          <button onClick={signOut} className={loginClassName} href="#">{loginText}</button>
-        </li>
-      </ul>
+      
+        <Switch>
+        <Route path="/sign-up">
+              <Link className="header__link" to="/login">Войти</Link>
+            </Route>
+            <Route path="/login">
+              <Link className="header__link" to="/sign-up">Регистрация</Link>
+            </Route>
+            </Switch>
+
+            <Switch>
+            <Route exact path="/">
+              <Sign email={email} onLogedOut={loggedOut} />
+            </Route>
+          </Switch>
     </header>
   );
 }
