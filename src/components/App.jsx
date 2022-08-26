@@ -25,8 +25,18 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSuccessTip, setIsSuccessTip] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
+  // const [isSignedIn, setIsSignedIn] = useState('');
   const [isInfoTipOpen, setIsInfoTipOpen] = useState(false);
+  const [isUseInfoMobileOpen, setIsUseInfoMobileOpen] = useState(false);
+
+  function handleUserInfoMobileOpen() {
+    setIsUseInfoMobileOpen(true);
+  }
+
+  function handleUserInfoMobileClose() {
+    setIsUseInfoMobileOpen(false);
+  }
 
   const history = useHistory();
 
@@ -59,10 +69,6 @@ function App() {
 
   function onEditAvatar() {
     setIsEditAvatarPopupOpen(true);
-  }
-
-  function onSuccessTip() {
-    setIsInfoTipOpen(true);
   }
 
   function closeAllPopups() {
@@ -121,61 +127,77 @@ function App() {
   }
 
   function handleAuthorization({ password, email }) {
-    auth.login({ password, email }).then((data) => {
-      if (data.token) {
-        setIsLoggedIn(true);
-        localStorage.setItem("token", data.token);
-        history.push("/");
-      }
-    }).catch((err) => {
-      setIsInfoTipOpen(true);
-      setIsSuccessTip(false);
-    })
-  }
-
-  function onCloseSuccess() {
-    history.push("/login");
-  }
-
-  function handleRegistration({ password, email }) {
-    auth.register({ password, email }).then((data) => {
-      if (data.data._id) {
-        setIsSuccessTip(true);
-        setIsInfoTipOpen(true);
-      }
-    }).catch((err) => {
-      setIsInfoTipOpen(true);
-      setIsSuccessTip(false);
-    })
-  }
-
-  function tokenCheck() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      auth.getContent(token).then((res) => {
-        if (res) {
-          setEmail(res.data.email)
+    auth
+      .login({ password, email })
+      .then((data) => {
+        if (data.token) {
           setIsLoggedIn(true);
+          localStorage.setItem("token", data.token);
           history.push("/");
         }
       })
+      .catch((err) => {
+        setIsInfoTipOpen(true);
+        setIsSuccessTip(false);
+      });
+  }
+
+  function handleRegistration({ password, email }) {
+    auth
+      .register({ password, email })
+      .then((data) => {
+        if (data.data._id) {
+          setIsSuccessTip(true);
+          setIsInfoTipOpen(true);
+        }
+      })
+      .catch((err) => {
+        setIsInfoTipOpen(true);
+        setIsSuccessTip(false);
+      });
+  }
+
+  function tokenCheck() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      auth.getContent(token).then((res) => {
+        if (res) {
+          setEmail(res.data.email);
+          setIsLoggedIn(true);
+          history.push("/");
+        }
+      });
     }
+  }
+
+  function hendleLoggedOut() {
+    setIsUseInfoMobileOpen(false);
+    setIsLoggedIn(false);
+    localStorage.removeItem("token");
+    history.push("/login");
+    console.log(isUseInfoMobileOpen);
   }
 
   React.useEffect(() => {
     tokenCheck();
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      history.push('/');
+      history.push("/");
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
-        <Header email={email}/>
+        <Header
+          email={email}
+          onUserInfoMobileOpen={handleUserInfoMobileOpen}
+          onUserInfoMobileClose={handleUserInfoMobileClose}
+          isUserInfoMobOpen={isUseInfoMobileOpen}
+          onLoggedOut={hendleLoggedOut}
+        />
         <Switch>
           <ProtectedRout
             exact
