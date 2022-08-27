@@ -37,7 +37,6 @@ class ApiClass {
     }).then(this._handleResponse);
   }
   addNewCard(cardInputData) {
-    console.log(cardInputData)
     return fetch(`${this._baseurl}${this._cohort}/cards`, {
       method: "POST",
       headers: {

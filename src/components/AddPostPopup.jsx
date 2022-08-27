@@ -1,18 +1,23 @@
 import PopupWithForm from "./PopupWithForm";
 import React from "react";
-import { useRef } from "react";
+import { useState } from "react";
 
 function AddPostPopup(props) {
-
-  const nameRef = useRef();
-  const linkRef = useRef();
+ const [cardname, setCardname] = useState('');
+ const [link, setLink] = useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onAddPlace({
-      name: nameRef.current.value,
-      link: linkRef.current.value
+      name: cardname,
+      link: link
     });
+  }
+  function handleCardnameChange(e) {
+    setCardname(e.target.value)
+  }
+  function handleLinkChange(e) {
+    setLink(e.target.value)
   }
   return (
     <PopupWithForm
@@ -26,7 +31,7 @@ function AddPostPopup(props) {
       <label className="popup__label">
         <input
           className="popup__input popup__input_type_title"
-          defaultValue=""
+          value={cardname}
           placeholder="Название"
           type="text"
           name="cardname"
@@ -34,7 +39,7 @@ function AddPostPopup(props) {
           minLength="2"
           maxLength="30"
           required
-          ref={nameRef}
+          onChange={handleCardnameChange}
         />
         <span className="popup__input-error title-input-error"></span>
       </label>
@@ -42,12 +47,12 @@ function AddPostPopup(props) {
         <input
           className="popup__input popup__input_type_pic-link"
           placeholder="Ссылка на картинку"
-          defaultValue=""
+          value={link}
           type="url"
           name="link"
           id="link-input"
           required
-          ref={linkRef}
+          onChange={handleLinkChange}
         />
         <span className="popup__input-error link-input-error">
           Введите адрес сайта.

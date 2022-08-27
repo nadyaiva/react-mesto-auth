@@ -26,11 +26,11 @@ function Register({onRegistration}) {
             <input
               className="auth-content__input"
               placeholder="Email"
-              defaultValue=""
               type="email"
               name="email"
               id="auth-content-email"
               required
+              value={email || ""}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -40,11 +40,11 @@ function Register({onRegistration}) {
             <input
               className="auth-content__input"
               placeholder="Пароль"
-              defaultValue=""
               type="password"
               name="password"
               id="auth-content-password"
               required
+              value={password || ""}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
