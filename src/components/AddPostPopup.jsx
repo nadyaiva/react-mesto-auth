@@ -2,30 +2,36 @@ import PopupWithForm from "./PopupWithForm";
 import React from "react";
 import { useState } from "react";
 
-function AddPostPopup(props) {
- const [cardname, setCardname] = useState('');
- const [link, setLink] = useState('');
+function AddPostPopup({ isLoading, onAddPlace, isOpen, onClose }) {
+  const [cardname, setCardname] = useState("");
+  const [link, setLink] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onAddPlace({
+    onAddPlace({
       name: cardname,
-      link: link
+      link: link,
     });
   }
   function handleCardnameChange(e) {
-    setCardname(e.target.value)
+    setCardname(e.target.value);
   }
   function handleLinkChange(e) {
-    setLink(e.target.value)
+    setLink(e.target.value);
   }
+
+  React.useEffect(() => {
+    setCardname('');
+    setLink('');
+  }, []);
+
   return (
     <PopupWithForm
       title="Новое место"
       name="add-photo"
-      isOpen={props.isOpen}
-      button="Создать"
-      onClose={props.onClose}
+      isOpen={isOpen}
+      buttonText={isLoading? 'Создание...' : 'Создать'}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <label className="popup__label">

@@ -2,16 +2,19 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Register({onRegistration}) {
+function Register({isLoading, onRegistration}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
     onRegistration({email, password})
+  }
+  React.useEffect(() => {
     setEmail("");
     setPassword("");
-  }
+}, []);
+
   return (
     <div className="auth-content">
       <form
@@ -51,7 +54,7 @@ function Register({onRegistration}) {
             />
           </label>
           <button className="auth-content__save-button" type="submit">
-            Зарегистрироваться
+            {isLoading ? "Регистрация" : "Зарегистрироваться"}
           </button>
           <Link className="auth-content__signup-link" to={'/login'}>
             Уже зарегистрированы? Войти

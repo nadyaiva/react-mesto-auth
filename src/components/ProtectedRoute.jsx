@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRout = ({isLoggedIn, children }) => {
+const ProtectedRoute = ({isLoggedIn, children}) => {
   return (
     <Route>
       {() =>
@@ -11,4 +11,4 @@ const ProtectedRout = ({isLoggedIn, children }) => {
   );
 };
 
-export default ProtectedRout;
+export default ProtectedRoute;

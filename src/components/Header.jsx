@@ -9,27 +9,36 @@ function Header({
   onUserInfoMobileOpen,
   isUserInfoMobOpen,
   onUserInfoMobileClose,
-  onLoggedOut
+  onLoggedOut,
 }) {
   const history = useHistory();
 
   return (
     <>
       <MediaQuery maxWidth={900}>
-        {isUserInfoMobOpen && <Sign onLoggedOutClick={onLoggedOut} email={email} />}
+        {isUserInfoMobOpen && (
+          <Sign onLoggedOutClick={onLoggedOut} email={email} />
+        )}
       </MediaQuery>
       <header className="header">
         <img className="header__logo" src={logoMesto} alt="Логотип Mesto" />
         <MediaQuery maxWidth={900}>
           <Switch>
             <Route exact path={"/"}>
-              {isUserInfoMobOpen ? (
+              <button
+                className={`header__button ${
+                  isUserInfoMobOpen
+                    ? "header__button_close"
+                    : "header__button_menu"
+                }`}
+                onClick={
+                  isUserInfoMobOpen
+                    ? onUserInfoMobileClose
+                    : onUserInfoMobileOpen
+                }
+                type="Button"
+              ></button>
 
-                <button className="header__button header__button_close" onClick={onUserInfoMobileClose} type="Button"></button>
-
-              ) : (
-                <button className="header__button header__button_menu" onClick={onUserInfoMobileOpen} type="Button"></button>
-              )}
             </Route>
             <Route path="/sign-up">
               <Link className="header__link" to="/login">

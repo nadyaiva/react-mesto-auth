@@ -1,7 +1,7 @@
 import React from "react";
 import { useState} from "react";
 
-function Login({ onAuthorization }) {
+function Login({isLoading, onAuthorization }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,9 +11,12 @@ function Login({ onAuthorization }) {
       return;
     }
     onAuthorization({ password, email });
+  }
+  React.useEffect(() => {
     setEmail("");
     setPassword("");
-  }
+}, []);
+
   return (
     <div className="auth-content">
       <form
@@ -50,11 +53,11 @@ function Login({ onAuthorization }) {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              //   ref={avatarRef}
+
             />
           </label>
           <button className="auth-content__save-button" type="submit">
-            Войти
+            {isLoading ? "Вход..." : "Войти"}
           </button>
         </fieldset>
       </form>
