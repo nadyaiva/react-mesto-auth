@@ -1,12 +1,17 @@
 import React from "react";
+import Popup from "./Popup";
 
-function PopupWithForm({onSubmit, buttonText, isOpen, onClose, name, title, children}) {
-  const className = `popup popup_place_${name} ${
-    isOpen ? "popup_opened" : ""
-  }`;
+function PopupWithForm({
+  onSubmit,
+  buttonText,
+  isOpen,
+  onClose,
+  name,
+  title,
+  children,
+}) {
   return (
-    <div className={className}>
-      <div>
+    <Popup onClose={onClose} isOpen={isOpen} name={name}>
       <form
         className={`form form_${name}`}
         name={`${name}`}
@@ -29,8 +34,7 @@ function PopupWithForm({onSubmit, buttonText, isOpen, onClose, name, title, chil
           type="button"
         />
       </form>
-      </div>
-    </div>
+    </Popup>
   );
 }
 
